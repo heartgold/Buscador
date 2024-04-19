@@ -1,0 +1,80 @@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script>
+
+  window.addEventListener("load", buscarDatos);
+  document.getElementById("input-search").addEventListener("input", onInputChange)
+
+  function buscarDatos(){
+    google.script.run
+    .withSuccessHandler(dataUsuarios=>{
+      let tableBody = document.getElementById("tableBody-usuarios");
+      var template = document.getElementById("rowTemplate");
+      var templateContent = template.content;
+
+      dataUsuarios.forEach(usuario=>{
+        const tr = templateContent.cloneNode(true);
+
+        const NroCargoCol = tr.querySelector(".template-NroCargo");
+        const FechaRDCol = tr.querySelector(".template-FechaRD");
+        const NroRDCol = tr.querySelector(".template-NroRD");
+        const NroExpedienteCol = tr.querySelector(".template-NroExpediente");
+        const AreaCol = tr.querySelector(".template-Area");
+        const ArticuloCol = tr.querySelector(".template-Articulo");
+        const AdministradoCol = tr.querySelector(".template-Administrado");
+        const TipoDocumentoCol = tr.querySelector(".template-TipoDocumento");
+        const NroDocumentoCol = tr.querySelector(".template-NroDocumento");
+        const DomicilioCol = tr.querySelector(".template-Domicilio");
+        const DistritoCol = tr.querySelector(".template-Distrito");
+        const DepartamentoCol = tr.querySelector(".template-Departamento");
+        const EstadoCol = tr.querySelector(".template-Estado");
+        const FechaNotificaciónCol = tr.querySelector(".template-FechaNotificación");
+        const TipoNotificacionCol = tr.querySelector(".template-TipoNotificacion");
+        const NotificadorCol = tr.querySelector(".template-Notificador");
+        const ObservacionesCol = tr.querySelector(".template-Observaciones");
+        const accionesCol = tr.querySelector(".template-acciones");
+        const editButton = tr.querySelector(".button-edit");
+        const deleteButton = tr.querySelector(".button-delete");
+
+        NroCargoCol.textContent = usuario[0];
+        FechaRDCol.textContent = usuario[1];
+        NroRDCol.textContent = usuario[2];
+        NroExpedienteCol.textContent = usuario[3];
+        AreaCol.textContent = usuario[4];
+        ArticuloCol.textContent = usuario[5];
+        AdministradoCol.textContent = usuario[6];
+        TipoDocumentoCol.textContent = usuario[7];
+        NroDocumentoCol.textContent = usuario[8];
+        DomicilioCol.textContent = usuario[9];
+        DistritoCol.textContent = usuario[10];
+        DepartamentoCol.textContent = usuario[11];
+        EstadoCol.textContent = usuario[12];
+        FechaNotificaciónCol.textContent = usuario[13];
+        TipoNotificacionCol.textContent = usuario[14];
+        NotificadorCol.textContent = usuario[15];
+        ObservacionesCol.textContent = usuario[16];
+        editButton.dataset.usuarioId = usuario[0];
+        deleteButton.dataset.usuarioId = usuario[0];
+
+        tableBody.appendChild(tr);
+      })
+    })
+    .readUsers();
+  }
+  function onInputChange(){
+    let inputText = document.getElementById("input-search").value.toString().toLowerCase();
+    /*console.log(inputText);*/
+    let tableBody = document.getElementById("tableBody-usuarios"); 
+    let tableRows = tableBody.getElementsByTagName("tr"); 
+    /* console.log(tableRows);*/
+    for (let i=0; i < tableRows.length; i++){
+      /* console.log(tableRows[i].cells[3].textContent); */
+      let textoConsulta = tableRows[i].cells[3].textContent.toString();
+      if (textoConsulta.indexOf(inputText)===-1){
+        tableRows[i].style.visibility = "collapse";
+      }else{
+        tableRows[i].style.visibility = "";
+      }
+    }
+  }
+  
+</script>

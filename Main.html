@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= include('CSS') ?>
+  </head>
+  <body>
+    <main class="container">
+      <h1 class="mb-5"> Registro de Resoluciones</h1>
+      <div class="d-flex justify-content-between mb-3">
+        <div class="col">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="bi bi-plus"></i> Agregar</button>
+        </div>
+        <div class="col-3">
+          <input type="text" class="form-control" id="input-search" placeholder="Buscar por expediente...">
+        </div>
+      </div>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Nro Cargo</td>
+            <th>Fecha RD</td>
+            <th>Nro RD</td>
+            <th>Nro Expediente</td>
+            <th>Area</td>
+            <th>Articulo</td>
+            <th>Administrado</td>
+            <th>Tipo Documento</td>
+            <th>Nro Documento</td>
+            <th>Domicilio</td>
+            <th>Distrito</td>
+            <th>Departamento</td>
+            <th>Email</td>
+            <th>Estado</td>
+            <th>Fecha de Notificación</td>
+            <th>Tipo de Notificacion</td>
+            <th>Notificador</td>
+            <th>Observaciones</td>
+          </tr>
+        </thead>
+        <tbody id="tableBody-usuarios">
+
+          </tbody>
+      </table>
+
+
+    </main>
+
+    <template id="rowTemplate">
+      <tr>
+        <td class="template-NroCargo"></td>
+        <td class="template-FechaRD"></td>
+        <td class="template-NroRD"></td>
+        <td class="template-NroExpediente"></td>
+        <td class="template-Area"></td>
+        <td class="template-Articulo"></td>
+        <td class="template-Administrado"></td>
+        <td class="template-TipoDocumento"></td>
+        <td class="template-NroDocumento"></td>
+        <td class="template-Domicilio"></td>
+        <td class="template-Distrito"></td>
+        <td class="template-Departamento"></td>
+        <td class="template-Email"></td>
+        <td class="template-Estado"></td>
+        <td class="template-FechaNotificación"></td>
+        <td class="template-TipoNotificacion"></td>
+        <td class="template-Notificador"></td>
+        <td class="template-Observaciones"></td>
+        <td class="template-acciones"><i class="bi bi-pencil-square button-edit"></i><i class="bi bi-trash button-delete"></i></td>
+      </tr>
+    </template>
+
+        <td class="template-nombres"></td>
+    <!-- Modal Create-->
+    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="createModalLabel">Registrar Resolución</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form name="crearResolucion" id="crearResolucion">
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" class="form-control" id="nroCargo" name="nroCargo" placeholder="Nro de Cargo">
+                </div>
+                <div class="col">
+                  <input type="date" class="form-control" id="fechaResolucion" name="fechaResolucion" placeholder="Fecha de Resolución">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" id="nroResolucion" name="nroResolucion" placeholder="Nro de Resolución">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" id="nroExpediente" name="nroExpediente" placeholder="Nro de Expediente">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" class="form-control" id="areaEmite" name="areaEmite" placeholder="Área que Emite">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" id="articuloResuelve" name="articuloResuelve" placeholder="Artículo o Resuelve">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" class="form-control" id="adminNombresApellidos" name="adminNombresApellidos" placeholder="Administrado (Nombres y Apellidos)" style="width: 100%;">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" class="form-control" id="domicilioAdmin" name="domicilioAdmin" placeholder="Domicilio del Administrado" style="width: 100%;">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="email" class="form-control" id="correoElectronico" name="correoElectronico" placeholder="Correo Electrónico" style="width: 100%;">
+                </div>
+                <div class="col">
+                  <select class="form-select" id="tipoDocumento" name="tipoDocumento">
+                    <option value="DNI">DNI</option>
+                    <option value="Carnet de Extranjería">Carnet de Extranjería</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" class="form-control" id="nroDocumento" name="nroDocumento" placeholder="Nro de Documento">
+                </div>
+                <div class="col">
+                  <select class="form-select" id="departamento" name="departamento">
+                    <option value="">Seleccionar Departamento</option>
+                    <!-- Aquí puedes incluir opciones para los 24 departamentos del Perú -->
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <select class="form-select" id="provincia" name="provincia">
+                    <option value="">Seleccionar Provincia</option>
+                    <!-- Las opciones de provincia se cargarán dinámicamente según el departamento seleccionado -->
+                  </select>
+                </div>
+                <div class="col">
+                  <select class="form-select" id="distrito" name="distrito">
+                    <option value="">Seleccionar Distrito</option>
+                    <!-- Los distritos se cargarán dinámicamente según la provincia seleccionada -->
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <select class="form-select" id="estadoNotificacion" name="estadoNotificacion">
+                    <option value="">Estado de Notificación</option>
+                    <option value="Notificado">Notificado</option>
+                    <option value="Pendiente">Pendiente</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <input type="date" class="form-control" id="fechaNotificacion" name="fechaNotificacion" placeholder="Fecha de Notificación">
+                </div>
+                <div class="col">
+                  <select class="form-select" id="tipoNotificacion" name="tipoNotificacion">
+                    <option value="">Tipo de Notificación</option>
+                    <option value="Físico">Físico</option>
+                    <option value="Digital por Correo">Digital por Correo</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Observaciones"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <?!= include('JS') ?>
+  </body>
+</html>
